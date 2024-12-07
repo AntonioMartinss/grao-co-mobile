@@ -1,5 +1,6 @@
 # Grão & Co. Agora um aplicativo
 
 <hr>
-# Design Inicial
+# Tela Inicial
+
 <img src="telainicial.png">
