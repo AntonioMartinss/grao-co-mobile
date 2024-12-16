@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.squareup.picasso.Picasso;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -49,16 +52,19 @@ public class CoffeAdapter extends RecyclerView.Adapter<CoffeAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Coffe coffe = coffes.get(position);
         holder.tvCoffeName.setText(coffe.name);
-        holder.tvCoffeValue.setText(coffe.value);
-        holder.tvCoffeQuantity.setText(coffe.quantity);
+        holder.tvCoffeValue.setText("" + coffe.value);
+        holder.tvCoffeQuantity.setText("" + coffe.quantity);
+        String urlImage = "http://10.0.2.2/grao-co/"+coffe.getPath();
+        Picasso.get().load(urlImage).into(holder.coffeImage);
 
-        // Teste para as informações do fragmento irem para a activity...
 
-        FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
-        PokemonDetail pokemonDetail = PokemonDetail.newInstance(pokemon.getId(), holder.cvPokemon.getCardBackgroundColor().getDefaultColor());
-        fragmentTransaction.replace(R.id.fragmentContainerView, pokemonDetail);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+
+//        FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+//        InitialFragment initialFragment = InitialFragment.newInstance();
+//        fragmentTransaction.replace(R.id.fragmentContainerView, initialFragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+
     }
 
     @Override

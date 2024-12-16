@@ -38,7 +38,7 @@
                     android:text="Nome"
                     android:id="@+id/tvCoffeName"
                     android:textSize="20sp"
-                    android:textColor="#FFFFFF"/>
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                     android:text="Preço"
                     android:id="@+id/tvCoffeValue"
                     android:textSize="15sp"
-                    android:textColor="#FFFFFF"
+
                     android:layout_marginTop="10dp"/>
 
                 <TextView
@@ -55,7 +55,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Descrição"
-                    android:textColor="#FFFFFF"
                     android:textSize="15sp" />
 
                 <LinearLayout

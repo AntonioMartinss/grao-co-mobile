@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ import retrofit2.Response;
  */
 public class InitialFragment extends Fragment {
 
-    ArrayList<Coffe> coffes;
+    ArrayList<Coffe> coffes = new ArrayList<Coffe>();
     private RecyclerView rvCoffe;
     private CoffeAdapter coffeAdapter;
 
@@ -84,6 +85,7 @@ public class InitialFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Coffe>> call, Throwable t) {
                 Toast.makeText(getContext(), "Falha na comunicação com o servidor: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("test", "onFailure: "+ t.toString());
             }
         });
     }
