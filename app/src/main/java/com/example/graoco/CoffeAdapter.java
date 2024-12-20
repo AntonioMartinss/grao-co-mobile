@@ -2,6 +2,7 @@ package com.example.graoco;
 
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 
 public class CoffeAdapter extends RecyclerView.Adapter<CoffeAdapter.ViewHolder> {
     ArrayList<Coffe> coffes;
-
+    Context context;
     public CoffeAdapter(ArrayList<Coffe> coffes) {
         this.coffes = coffes;
     }
@@ -40,6 +41,7 @@ public class CoffeAdapter extends RecyclerView.Adapter<CoffeAdapter.ViewHolder> 
             coffeImage = (ImageView) view.findViewById(R.id.coffeImage);
         }
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,27 +50,37 @@ public class CoffeAdapter extends RecyclerView.Adapter<CoffeAdapter.ViewHolder> 
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        context = holder.tvCoffeName.getContext();
         Coffe coffe = coffes.get(position);
         holder.tvCoffeName.setText(coffe.name);
-        holder.tvCoffeValue.setText("" + coffe.value);
-        holder.tvCoffeQuantity.setText("" + coffe.quantity);
+        holder.tvCoffeValue.setText("R$ " + coffe.value);
+        holder.tvCoffeQuantity.setText( coffe.quantity + "- und");
         String urlImage = "http://10.0.2.2/grao-co/"+coffe.getPath();
         Picasso.get().load(urlImage).into(holder.coffeImage);
 
+        holder.coffeImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-
-//        FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
-//        InitialFragment initialFragment = InitialFragment.newInstance();
-//        fragmentTransaction.replace(R.id.fragmentContainerView, initialFragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
+                    FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+                    FragmentCoffeDetail fragmentCoffeDetail = FragmentCoffeDetail.newInstance(coffe.getId());
+                    fragmentTransaction.replace(R.id.fragmentContainerView, fragmentCoffeDetail);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+        });
 
     }
+
+
 
     @Override
     public int getItemCount() {
         return coffes.size();
     }
+
+
 }
