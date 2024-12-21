@@ -1,9 +1,10 @@
 package com.example.graoco;
 
-
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
@@ -21,23 +22,22 @@ import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentLogin#newInstance} factory method to
+ * Use the {@link FragmentRegister#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentLogin extends Fragment {
+public class FragmentRegister extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_EMAIL = "email";
-    private static final String ARG_PASSWORD = "password";
+
 
     // TODO: Rename and change types of parameters
 
     private View fragmentView;
-    Button buttonLogin;
+    Button buttonRegister;
     Button buttonRedirect;
     User user;
-    public FragmentLogin() {
+    public FragmentRegister() {
         // Required empty public constructor
     }
 
@@ -46,93 +46,84 @@ public class FragmentLogin extends Fragment {
      * this fragment using the provided parameters.
      *
 
-     * @return A new instance of fragment FragmentLogin.
+     * @return A new instance of fragment FragmentRegister.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentLogin newInstance() {
-        FragmentLogin fragment = new FragmentLogin();
+    public static FragmentRegister newInstance() {
+        FragmentRegister fragment = new FragmentRegister();
         Bundle args = new Bundle();
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
 
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        fragmentView = inflater.inflate(R.layout.fragment_login, container, false);
-        buttonLogin = fragmentView.findViewById(R.id.buttonLogin);
+        fragmentView =  inflater.inflate(R.layout.fragment_register, container, false);
+        buttonRegister = fragmentView.findViewById(R.id.buttonRegister);
         buttonRedirect = fragmentView.findViewById(R.id.buttonRedirect);
 
         buttonRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                FragmentRegister fragmentRegister = FragmentRegister.newInstance();
-                fragmentTransaction.replace(R.id.fragmentContainerView, fragmentRegister);
+                FragmentLogin fragmentLogin = FragmentLogin.newInstance();
+                fragmentTransaction.replace(R.id.fragmentContainerView, fragmentLogin);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
-
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser();
+                createUser();
             }
         });
-
         return fragmentView;
     }
 
-
-
-    private void loginUser() {
+    private void createUser() {
+        TextView etName = fragmentView.findViewById(R.id.etName);
         TextView etEmail = fragmentView.findViewById(R.id.etEmail);
         TextView etPassword = fragmentView.findViewById(R.id.etPassword);
 
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
+                .addFormDataPart("name", etName.getText().toString())
                 .addFormDataPart("email", etEmail.getText().toString())
                 .addFormDataPart("password", etPassword.getText().toString())
                 .build();
 
-        Call<User> call = RetrofitClient.getInstance().getMyApi().loginUser(requestBody);
+        Call<User> call = RetrofitClient.getInstance().getMyApi().createUser(requestBody);
 
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-                    user = response.body();
-                    if(((MainActivity) getActivity()).savePreferences(user.name,user.email) == false){
-                        Toast.makeText(requireContext(), "Erro ao salvar informações", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(requireContext(), "Sucesso ao salvar informações", Toast.LENGTH_SHORT).show();
-                        FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                        InitialFragment initialFragment = InitialFragment.newInstance();
-                        fragmentTransaction.replace(R.id.fragmentContainerView, initialFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                    }
-
+                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                    FragmentLogin fragmentLogin = FragmentLogin.newInstance();
+                    fragmentTransaction.replace(R.id.fragmentContainerView, fragmentLogin);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                 }else{
                     Toast.makeText(requireContext(), "Erro", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                Toast.makeText(requireContext(), "negado", Toast.LENGTH_SHORT).show();
+
             }
         });
+    }
 
-        };
 }
-

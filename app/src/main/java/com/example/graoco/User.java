@@ -24,6 +24,10 @@ public class User {
         this.success = success;
         this.message = message;
     }
+    public User(String name, String email){
+        this.name = name;
+        this.email = email;
+    }
 
     public int getId() {
         return id;

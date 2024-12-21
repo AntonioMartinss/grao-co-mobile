@@ -17,5 +17,7 @@ public interface Api {
     Call<List<Coffe>> getCoffeDescription(@Path("id") int id);
     @POST("users/login")
     Call<User> loginUser(@Body RequestBody requestBody);
+    @POST("users/")
+    Call<User> createUser(@Body RequestBody requestBody);
 }
 

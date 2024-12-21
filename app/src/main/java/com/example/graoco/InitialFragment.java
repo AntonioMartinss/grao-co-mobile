@@ -36,7 +36,7 @@ public class InitialFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static InitialFragment newInstance(String param1, String param2) {
+    public static InitialFragment newInstance() {
         InitialFragment fragment = new InitialFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
