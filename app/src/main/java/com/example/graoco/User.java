@@ -1,20 +1,28 @@
 package com.example.graoco;
 
+import com.google.gson.annotations.SerializedName;
+
 public class User {
+    @SerializedName("id")
     int id;
     String name;
     String email;
     int password;
     String photo;
     int usersCategories_id;
+    private boolean success;
+    private String message;
 
-    public User(int id, String name, String email, int password, String photo, int usersCategories_id) {
+
+    public User(int id, String name, String email, int password, String photo, int usersCategories_id, boolean success, String message) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.photo = photo;
         this.usersCategories_id = usersCategories_id;
+        this.success = success;
+        this.message = message;
     }
 
     public int getId() {
@@ -63,5 +71,21 @@ public class User {
 
     public void setUsersCategories_id(int usersCategories_id) {
         this.usersCategories_id = usersCategories_id;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

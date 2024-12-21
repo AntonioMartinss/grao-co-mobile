@@ -1,6 +1,8 @@
 package com.example.graoco;
 
 import java.util.List;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -14,6 +16,6 @@ public interface Api {
     @GET("products/list/{id}")
     Call<List<Coffe>> getCoffeDescription(@Path("id") int id);
     @POST("users/login")
-    Call<User> loginUser(@Body User user);
+    Call<User> loginUser(@Body RequestBody requestBody);
 }
 
