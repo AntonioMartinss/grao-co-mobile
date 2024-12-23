@@ -65,6 +65,16 @@
             android:text="Comprar"
             android:textColor="@color/black" />
 
+        <Button
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/holo_red_dark"
+            android:fontFamily="@font/jetbrains_mono_light"
+            android:text="Deletar produto"
+            android:textColor="@color/white"/>
+
     </LinearLayout>
 
 

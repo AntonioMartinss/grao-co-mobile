@@ -5,6 +5,7 @@ import java.util.List;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -19,5 +20,7 @@ public interface Api {
     Call<User> loginUser(@Body RequestBody requestBody);
     @POST("users/")
     Call<User> createUser(@Body RequestBody requestBody);
+    @DELETE("products/delete-product/{id}")
+    Call<Coffe> deleteCoffe(@Path("id") int id);
 }
 

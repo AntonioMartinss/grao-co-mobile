@@ -9,8 +9,10 @@ public class Coffe {
     int categories_id;
     String category_name;
     String path;
+    private boolean success;
+    private String message;
 
-    public Coffe(int id, String name, int value, String description, int quantity, int categories_id, String category_name, String path) {
+    public Coffe(int id, String name, int value, String description, int quantity, int categories_id, String category_name, String path, boolean success, String message) {
         this.id = id;
         this.name = name;
         this.value = value;
@@ -18,7 +20,9 @@ public class Coffe {
         this.quantity = quantity;
         this.categories_id = categories_id;
         this.category_name = category_name;
-        this.path = path = path;
+        this.path = path;
+        this.success = success;
+        this.message = message;
     }
     public Coffe(){
 
@@ -53,5 +57,20 @@ public class Coffe {
     }
     public String getPath() {
         return path;
+    }
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

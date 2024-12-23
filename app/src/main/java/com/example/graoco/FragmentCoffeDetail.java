@@ -5,14 +5,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -36,6 +39,8 @@ public class FragmentCoffeDetail extends Fragment {
     // TODO: Rename and change types of parameters
     private int id;
     private View fragmentView;
+    Button deleteBtn;
+    Coffe coffe;
     public FragmentCoffeDetail() {
         // Required empty public constructor
     }
@@ -73,6 +78,14 @@ public class FragmentCoffeDetail extends Fragment {
         // Inflate the layout for this fragment
 
         fragmentView = inflater.inflate(R.layout.fragment_coffe_detail, container, false);
+        deleteBtn = fragmentView.findViewById(R.id.deleteBtn);
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteCoffe();
+            }
+        });
 
         return fragmentView;
 
@@ -111,6 +124,31 @@ public class FragmentCoffeDetail extends Fragment {
             @Override
             public void onFailure(Call<List<Coffe>> call, Throwable t) {
                 Log.d("TESTE", t.toString());
+            }
+        });
+    }
+
+    private void deleteCoffe() {
+        Call <Coffe> call = RetrofitClient.getInstance().getMyApi().deleteCoffe(id);
+        call.enqueue(new Callback<Coffe>() {
+            @Override
+            public void onResponse(Call<Coffe> call, Response<Coffe> response) {
+                if(response.isSuccessful()){
+                    coffe = response.body();
+                    Toast.makeText(requireContext(), "Sucesso ao deletar. Redirecionando...", Toast.LENGTH_SHORT).show();
+                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                    InitialFragment initialFragment = InitialFragment.newInstance();
+                    fragmentTransaction.replace(R.id.fragmentContainerView, initialFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }else{
+                    Toast.makeText(requireContext(), "Erro deletar...", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Coffe> call, Throwable t) {
+
             }
         });
     }
