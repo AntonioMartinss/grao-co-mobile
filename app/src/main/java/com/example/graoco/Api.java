@@ -8,6 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface Api {
@@ -22,5 +23,7 @@ public interface Api {
     Call<User> createUser(@Body RequestBody requestBody);
     @DELETE("products/delete-product/{id}")
     Call<Coffe> deleteCoffe(@Path("id") int id);
+    @PUT("products/update-product/{id}")
+    Call<Coffe> updateCoffe(@Path("id") int id, @Body RequestBody requestBody);
 }
 

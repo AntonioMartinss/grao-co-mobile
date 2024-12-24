@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +20,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -40,6 +41,7 @@ public class FragmentCoffeDetail extends Fragment {
     private int id;
     private View fragmentView;
     Button deleteBtn;
+    Button editBtn;
     Coffe coffe;
     public FragmentCoffeDetail() {
         // Required empty public constructor
@@ -79,6 +81,14 @@ public class FragmentCoffeDetail extends Fragment {
 
         fragmentView = inflater.inflate(R.layout.fragment_coffe_detail, container, false);
         deleteBtn = fragmentView.findViewById(R.id.deleteBtn);
+        editBtn = fragmentView.findViewById(R.id.editBtn);
+
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateCoffe();
+            }
+        });
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +161,40 @@ public class FragmentCoffeDetail extends Fragment {
 
             }
         });
+    }
+
+    private void updateCoffe(){
+        TextView etName = fragmentView.findViewById(R.id.etName);
+        TextView etDescription = fragmentView.findViewById(R.id.etDescription);
+        TextView etValue = fragmentView.findViewById(R.id.etValue);
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("name", etName.getText().toString())
+                .addFormDataPart("value", etValue.getText().toString())
+                .addFormDataPart("description", etDescription.getText().toString())
+                .build();
+
+        Call<Coffe> call = RetrofitClient.getInstance().getMyApi().updateCoffe(id, requestBody);
+
+       call.enqueue(new Callback<Coffe>() {
+           @Override
+           public void onResponse(Call<Coffe> call, Response<Coffe> response) {
+               if(response.isSuccessful()){
+                   Toast.makeText(requireContext(), "Café Atualizado", Toast.LENGTH_SHORT).show();
+
+
+               }else{
+                   Toast.makeText(requireContext(), "Erro ao Atualizar", Toast.LENGTH_SHORT).show();
+               }
+           }
+
+           @Override
+           public void onFailure(Call<Coffe> call, Throwable t) {
+               Toast.makeText(requireContext(), "Erro", Toast.LENGTH_SHORT).show();
+           }
+       });
+
     }
 
     }

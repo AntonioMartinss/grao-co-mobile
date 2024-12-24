@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FragmentCoffeDetail">
+
 
 
     <LinearLayout
@@ -75,7 +76,47 @@
             android:text="Deletar produto"
             android:textColor="@color/white"/>
 
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Atualizar nome do café"
+            android:inputType="textPersonName"
+            android:padding="12dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Atualizar descrição"
+            android:inputType="textLongMessage"
+            android:padding="12dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_marginBottom="24dp" />
+        <EditText
+            android:id="@+id/etValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Atualizar Valor"
+            android:inputType="numberDecimal"
+            android:padding="12dp"
+            android:background="@android:drawable/editbox_background_normal"
+            android:layout_marginBottom="24dp" />
+        <Button
+            android:id="@+id/editBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@android:color/white"
+            android:fontFamily="@font/jetbrains_mono_light"
+            android:text="Atualizar produto"
+            android:textColor="@color/black"/>
+
+
+
     </LinearLayout>
 
 
-</FrameLayout>
+</ScrollView>
